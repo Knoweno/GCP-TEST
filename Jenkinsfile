@@ -18,7 +18,7 @@ pipeline {
             }
         }
 
-        stage('Zip  Files') {
+        stage('Zip  Files 2') {
             steps {
                 script {
                     // Zip all the HTML files into one archive
