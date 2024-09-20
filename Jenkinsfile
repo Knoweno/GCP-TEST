@@ -28,12 +28,13 @@ pipeline {
         stage('Zip  Files 2') {
             steps {
                 script {
-                    // Get the current date and time
-                    def date = sh(script: "date +%Y%m%d-%H%M%S", returnStdout: true).trim()
-                    // Check if BUILD_DISPLAY_NAME exists, else use branch and build number
-                    def buildTitle = env.BUILD_DISPLAY_NAME ? env.BUILD_DISPLAY_NAME : "${BRANCH}-${BUILD_NUMBER}"
-                    // Create the tar file name using the build title and timestamp
-                    env.TAR_FILE = "${buildTitle}-${date}-html_files.tar.gz"
+				 // Get the build number
+                    def buildNumber = env.BUILD_NUMBER
+                    // Get the pipeline name or title
+                    def pipelineName = env.BUILD_DISPLAY_NAME ? env.BUILD_DISPLAY_NAME : 'default'
+                    // Create the tar file name using the branch name, pipeline name, and build number
+                    env.TAR_FILE = "${BRANCH}-${pipelineName}-${buildNumber}.tar.gz"
+				
                     
                     // Debug: Print the tar file name
                     echo "Creating tar file: ${env.TAR_FILE}"
@@ -47,10 +48,6 @@ pipeline {
 
         stage('Archive Artifacts') {
             steps {
-                // Archive the ZIP file as a build artifact
-                //archiveArtifacts artifacts: "${ZIP_FILE}", fingerprint: true
-                 //archiveArtifacts artifacts: "${TAR_FILE}", allowEmptyArchive: false
-                //archiveArtifacts artifacts: 'html_files.zip', followSymlinks: false
                 archiveArtifacts artifacts: "${env.TAR_FILE}", allowEmptyArchive: false
             }
         }
