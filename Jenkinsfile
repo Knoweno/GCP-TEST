@@ -71,7 +71,15 @@ pipeline {
                 }
             }
         }
-
+    stage('Print Current Working Directory') {
+            steps {
+                script {
+                    // Print the current working directory
+                    def cwd = sh(script: 'pwd', returnStdout: true).trim()
+                    echo "Current Working Directory: ${cwd}"
+                }
+            }
+        }
          stage('Cleanup Workspace') {
             steps {
                 // Clean up the workspace to remove all files created during the build
