@@ -38,8 +38,12 @@ pipeline {
                     def buildTitle = env.BUILD_DISPLAY_NAME ? env.BUILD_DISPLAY_NAME : "${BRANCH}-${BUILD_NUMBER}"
                     // Create the tar file name using the build title and timestamp
                     def tarFileName = "${buildTitle}-${date}-html_files.tar.gz"
+
+                    // Debug: Print the tar file name
+                    echo "Creating tar file: ${env.TAR_FILE}"
                     // Compress the HTML files using the generated file name
-                    sh "tar -czf ${tarFileName} *.html"
+                    //sh "tar -czf ${tarFileName} *.html"
+                    sh "tar -czf '${env.TAR_FILE}' *.html"
                     // Save the file name in the environment to use in other stages
                     env.TAR_FILE = tarFileName
                 }
@@ -69,7 +73,8 @@ pipeline {
             steps {
                 script {
                     // Copy the compressed file to the destination path provided as a parameter
-                    sh "cp ${env.TAR_FILE} ${params.DEST_PATH}"
+                   // sh "cp ${env.TAR_FILE} ${params.DEST_PATH}"
+                    sh "cp '${env.TAR_FILE}' '${params.DEST_PATH}'"
                 }
             }
         }
