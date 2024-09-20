@@ -80,12 +80,12 @@ pipeline {
                 }
             }
         }
-         stage('Cleanup Workspace') {
+         /*stage('Cleanup Workspace') {
             steps {
                 // Clean up the workspace to remove all files created during the build
                 cleanWs()
             }
-        }
+        }*/
     }
 
     post {
