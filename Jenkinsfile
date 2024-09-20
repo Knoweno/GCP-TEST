@@ -31,7 +31,8 @@ pipeline {
 				 // Get the build number
                     def buildNumber = env.BUILD_NUMBER
                     // Get the pipeline name or title
-                    def pipelineName = env.BUILD_DISPLAY_NAME ? env.BUILD_DISPLAY_NAME : 'default'
+                    def pipelineName = env.JOB_NAME.replaceAll('/', '-')
+                    //def pipelineName = env.BUILD_DISPLAY_NAME ? env.BUILD_DISPLAY_NAME : 'default'
                     // Create the tar file name using the branch name, pipeline name, and build number
                     env.TAR_FILE = "${BRANCH}-${pipelineName}-${buildNumber}.tar.gz"
 				
