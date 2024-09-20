@@ -37,6 +37,12 @@ pipeline {
                 //archiveArtifacts artifacts: 'html_files.zip', followSymlinks: false
             }
         }
+         stage('Cleanup Workspace') {
+            steps {
+                // Clean up the workspace to remove all files created during the build
+                cleanWs()
+            }
+        }
     }
 
     post {
