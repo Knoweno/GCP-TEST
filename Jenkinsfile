@@ -3,7 +3,8 @@ pipeline {
 
     parameters {
         string(name: 'DEST_PATH', defaultValue: '/path/to/destination', description: 'Enter the destination path to copy the compressed file')
-        booleanParam(name: 'git push', defaultValue: false, description: 'Select Yes to copy the compressed file to the destination path')
+        booleanParam(name: 'COPY_TO_DEST', defaultValue: false, description: 'Select Yes to copy the compressed file to the destination path')
+
 
     }
 
