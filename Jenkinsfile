@@ -13,7 +13,7 @@ pipeline {
         GIT_REPO = 'https://github.com/your-username/your-repo.git' // Replace with your GitHub repo URL
         BRANCH = 'master' // Replace with your target branch
         //ZIP_FILE = 'html_files.zip'
-       // TAR_FILE = 'html_files.tar.gz' 
+       //TAR_FILE = 'html_files.tar.gz' 
     }
 
     stages {
@@ -28,25 +28,19 @@ pipeline {
         stage('Zip  Files 2') {
             steps {
                 script {
-                    // Zip all the HTML files into one archive
-                    //sh "zip -r ${ZIP_FILE} *.html"
-                     //sh "tar -czf ${TAR_FILE} *.html"
-                    //sh 'zip -r html_files.zip *.html'
-
-                     // Get the current date and time
+                    // Get the current date and time
                     def date = sh(script: "date +%Y%m%d-%H%M%S", returnStdout: true).trim()
                     // Check if BUILD_DISPLAY_NAME exists, else use branch and build number
                     def buildTitle = env.BUILD_DISPLAY_NAME ? env.BUILD_DISPLAY_NAME : "${BRANCH}-${BUILD_NUMBER}"
                     // Create the tar file name using the build title and timestamp
-                    def tarFileName = "${buildTitle}-${date}-html_files.tar.gz"
-
+                    env.TAR_FILE = "${buildTitle}-${date}-html_files.tar.gz"
+                    
                     // Debug: Print the tar file name
                     echo "Creating tar file: ${env.TAR_FILE}"
+                    
                     // Compress the HTML files using the generated file name
-                    //sh "tar -czf ${tarFileName} *.html"
-                    sh "tar -czf '${env.TAR_FILE}' *.html"
-                    // Save the file name in the environment to use in other stages
-                    env.TAR_FILE = tarFileName
+                    sh "tar -czf '${env.TAR_FILE}' *.html"  // Use quotes to ensure correct handling of spaces
+               
                 }
             }
         }
