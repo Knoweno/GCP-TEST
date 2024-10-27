@@ -9,7 +9,7 @@ pipeline {
     }
 
     environment {
-        // Define variables for reuse
+        // Define variables for reuse--
         GIT_REPO = 'https://github.com/your-username/your-repo.git' // Replace with your GitHub repo URL
         BRANCH = 'master' // Replace with your target branch
         //ZIP_FILE = 'html_files.zip'
